@@ -1,4 +1,8 @@
 <?php $title = "About" ;
+if(session_status() == PHP_SESSION_NONE)session_start();
+if(!isset($_SESSION['auth'])){
+    header('location:../NavItem/login.php');
+}
  include('../inc/header.php'); 
  include ('../inc/navbar.php');
  ?>

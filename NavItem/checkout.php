@@ -1,8 +1,10 @@
 <?php
 $title = "checkout" ;
-if(session_status()== PHP_SESSION_NONE)session_start();
- include('../inc/header.php');
- include ('../inc/navbar.php'); ?>
+if(session_status() == PHP_SESSION_NONE)session_start();
+if(!isset($_SESSION['auth'])){
+    header('location:../NavItem/login.php');
+}
+?>
 
 <!-- Header-->
 <header class="bg-dark py-5">

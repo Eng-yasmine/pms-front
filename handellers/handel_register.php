@@ -12,11 +12,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
        $_POST['role']=
        ['admin' => $admin_name , 
        'user' => $user];
-       var_dump($_POST);
+
+       /* var_dump($_POST);
        var_dump($_POST['role']);
        var_dump($_POST['username']);
        var_dump($_POST['useremail']);
-       var_dump($_POST['userpassword']);
+       var_dump($_POST['userpassword']); */
+
+
          $errors = [];
 #validation of user name 
 if(!isset($_POST['username']) || empty($user_name)){
@@ -62,8 +65,15 @@ if(empty($errors)){
         'role' => $_POST['role']
     ];
 
-    $user_data = json_encode($user_data);
-    $_SESSION['user_data'] = $user_data;
+    $file = fopen('../Data/userdata.csv','a');
+   $file = fwrite($file , $user_data['user_name'].','.$user_data['user_email'].','.$user_data['user_password'].','.$user_data['role']);
+    fclose($file); 
+   $_SESSION['auth'] =  $user_data = [
+                                    'user_name' => $user_name ,
+                                    'user_email' => $user_email ,
+                                    'user_password' => $user_password ,
+                                    'role' => $_POST['role']
+                                         ];
 }else{
     $_SESSION['errors'] = $errors;
 }
