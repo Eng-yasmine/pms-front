@@ -1,10 +1,9 @@
 <?php
+$title = "checkout" ;
 if(session_status()== PHP_SESSION_NONE)session_start();
- include('../inc/header.php'); ?>
-<?php if(isset($_SESSION['errors'])){
- $errors =$_SESSION['errors']; 
- unset($_SESSION['errors']);
-}?>
+ include('../inc/header.php');
+ include ('../inc/navbar.php'); ?>
+
 <!-- Header-->
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
@@ -51,36 +50,36 @@ if(session_status()== PHP_SESSION_NONE)session_start();
                                     <label for="name">Name</label>
                                     <input type="text" name="name" id="name" class="form-control" placeholder="enter your name greater than 6 char">
                                 </div>
-                                <?php if(isset($errors['name'])):?>
-                              <h1 class="alert alert-danger" ><?=$errors['name'] ; unset($errors['name']);?></h1>
+                                <?php if(isset($_SESSION['name'])):?>
+                              <h1 class="alert alert-danger" ><?=$_SESSION['name'] ; unset($_SESSION['name']);?></h1>
                               <?php endif;?>
                                 <div class="mb-3">
                                     <label for="email">Email</label>
                                     <input type="email" name="email" id="email" class="form-control" placeholder="enter your valid email">
                                 </div>
-                                <?php if(isset($errors['email'])):?>
-                                <h1 class="alert alert-danger" ><?=$errors['email'];unset($errors['email']);?></h1>
+                                <?php if(isset($_SESSION['email'])):?>
+                                <h1 class="alert alert-danger" ><?=$_SESSION['email'];unset($_SESSION['email']);?></h1>
                                 <?php endif;?>
                                 <div class="mb-3">
                                     <label for="addr">Address</label>
                                     <input type="text" name="address" id="addr" class="form-control" placeholder="please enter right mail">
                                 </div>
-                                <?php if(isset($errors['address'])):?>
-                                <h1 class="alert alert-danger" ><?=$errors['address']; unset($errors['note']);?></h1>
+                                <?php if(isset($_SESSION['address'])):?>
+                                <h1 class="alert alert-danger" ><?=$_SESSION['address']; unset($_SESSION['address']);?></h1>
                                 <?php endif;?>
                                 <div class="mb-3">
                                     <label for="tele">Phone</label>
                                     <input type="number" name="phone" id="tele" class="form-control" placeholder="enter correct number for contact you">
                                 </div>
-                                <?php if(isset($errors['phone'])):?>
-                                <h1 class="alert alert-danger" ><?=$errors['phone']; unset($errors['phone']);?></h1>
+                                <?php if(isset($_SESSION['phone'])):?>
+                                <h1 class="alert alert-danger" ><?=$_SESSION['phone']; unset($_SESSION['phone']);?></h1>
                                 <?php endif;?>
                                 <div class="mb-3">
                                     <label for="notes">Notes</label>
                                     <input type="text" name="note" id="notes" class="form-control" placeholder="optional">
                                 </div>
-                                <?php if(isset($errors['note'])):?>
-                                <h1 class="alert alert-danger" ><?=$errors['note']; unset($errors['note']); ?></h1>
+                                <?php if(isset($_SESSION['note'])):?>
+                                <h1 class="alert alert-danger" ><?=$_SESSION['note']; unset($_SESSION['note']); ?></h1>
                                 <?php endif;?>
                                
                                 

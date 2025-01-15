@@ -1,6 +1,9 @@
 <?php 
+$title = "Home" ;
 if(session_status()== PHP_SESSION_NONE)session_start();
-include('../inc/header.php'); ?>
+include('../inc/header.php'); 
+include ('../inc/navbar.php');
+?>
 
 <!-- Header-->
 <header class="bg-dark py-5">

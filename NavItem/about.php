@@ -1,5 +1,8 @@
-<?php include('../inc/header.php'); ?>
-
+<?php $title = "About" ;
+ include('../inc/header.php'); 
+ include ('../inc/navbar.php');
+ ?>
+ 
 <!-- Header-->
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">

@@ -40,7 +40,7 @@ if (checkmethod('POST')){
     }
 #validate address
 
-    if(!check_Address($adress)){
+    if(!check_any_textarea($adress)){
 
     $errors[] = 'sorry..! your address must be words';
     }
@@ -60,7 +60,7 @@ if (checkmethod('POST')){
 
       $errors[] = 'sorry.!this field is requiredv';
     }
-    if(!check_Address($note)){
+    if(!check_any_textarea($note)){
 
         $errors[] = 'sorry..! your address must be words';
         }
@@ -72,6 +72,7 @@ if (checkmethod('POST')){
     
         $errors[] = 'sorry..!your address must be less than 100 char';
         }
+        
         if(empty($errors)){
 
         $_SESSION['user_info'] =[$name , $email , $phone , $adress , $note ];
@@ -89,7 +90,7 @@ if (checkmethod('POST')){
 }else{
 
   $_SESSION['request_error'] = 'its not supported method ' ;
-  header("location:../NavItem/cart.php");
+  header("location:../NavItem/checkout.php");
   die();
 }
 
