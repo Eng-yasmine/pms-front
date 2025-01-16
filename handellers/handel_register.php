@@ -24,9 +24,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 #validation of user name 
 if(!isset($_POST['username']) || empty($user_name)){
      $errors[] ='name is required' ;
-}elseif( strlen($user_name) < 6){
+}
+if( strlen($user_name) < 6){
     $errors[] ='sorry user name must be greater than 6 char';
-}elseif( strlen($user_name) > 15){
+}
+if( strlen($user_name) > 15){
    $errors[] ='sorry user name must be less than 15 char';
 }
 
@@ -35,7 +37,8 @@ if(!isset($_POST['username']) || empty($user_name)){
 
 if(!isset($_POST['useremail']) || empty($user_email)){
     $errors[]= 'sorry email is required';
-}elseif(!filter_var($user_email , FILTER_VALIDATE_EMAIL)){
+}
+if(!filter_var($user_email , FILTER_VALIDATE_EMAIL)){
     $errors[]= 'sorry email is not valid';
 }
 
@@ -43,9 +46,11 @@ if(!isset($_POST['useremail']) || empty($user_email)){
 
 if(!isset($_POST['userpassword']) || empty($user_password)){
     $errors[] = 'sorry password is required';
-}elseif( strlen($user_password) < 8){
+}
+if( strlen($user_password) < 8){
     $errors[] = 'sorry password must be greater than 8 char';
-}elseif( strlen($user_password) > 10){
+}
+if( strlen($user_password) > 10){
     $errors[] = 'sorry password must be less than 10 char';
 }
 

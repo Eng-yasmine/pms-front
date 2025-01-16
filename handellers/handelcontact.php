@@ -1,78 +1,48 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) session_start();
-include '../core/checked_and_contact.php';
-include   '../core/checkedvalidtion.php';
+include '../core/functions_and_validations.php' ;
 
 
 
 $errors = [] ;
 //echo "done" ;
 
-if (checkmethod('POST')){
-    $name = sanitizing($_POST['name']);
-    $email = sanitizing($_POST['email']);
-    $message = sanitizing($_POST['message']);
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+$name = trim($_POST['name']);
+$name= htmlspecialchars(htmlentities($name));
+$email = trim($_POST['email']);
+$email = filter_var($email, FILTER_VALIDATE_EMAIL);
+$email = htmlspecialchars($email);
+$message = trim($_POST['message']);
+$message = htmlspecialchars(htmlentities($message));
 
-    #validate name
-    
-    if (empty($name)) {
-        $errors[] = 'sorry..! name is required ';
-    }
-    if (check_mini_length($name, 15)) {
+$errors = [];
+if(empty($name)){
 
-        $errors[] = 'sorry..! name must be greater than 15 char';
-    }
-    if (check_max_length($name, 25)) {
+    $errors[] = 'sorry..! name is required';
+}
+if(empty($email)){
+    $errors[] = 'sorry..! email is required';
+}
+if(empty($message)){
 
-        $errors[] = 'sorry..! name must be greater than 15 char';
-    }
-#validate email
+$errors [] = 'sorry..! message is required ';
 
-    if (empty($email)) {
-
-        $errors[] = 'sorry..! email is required';
-    }
-    if (!check_email($email)) {
-
-        $errors[] = 'sorry..! its not valid email';
-    }
-    
-#validate message
-
-if(!check_any_textarea($message)){
-
-    $errors[] = 'sorry..! your address must be words';
-    }
-    if(check_mini_length($message , 50)){
-
-    $errors[] = 'sorry..!your address must be greater than 50 char';
-    }
-    if(check_max_length($message , 100)){
-
-    $errors[] = 'sorry..!your address must be less than 100 char';
-    }
-
-    if(empty($errors)){
-
-        $_SESSION['user_info'] =[$name , $email , $phone , $adress , $note ];
-
-        header("location:location:../NavItem/index.php");
-        die();
-           }else{
-
-        $_SESSION['errors'] =$errors ;
-
-        header("location:../NavItem/contact.php");
-        die();
-     
-           }
-}else{
-
-  $_SESSION['request_error'] = 'its not supported method ' ;
-  header("location:../NavItem/contact.php");
-  die();
 }
 
+if(empty($errors)){
 
+$_SESSION['user_info'] = [
+    'name' => $name ,
+    'email' => $email ,
+    'message'=> $message ,
+    
+];
+header('location:../NavItem/index.php');
+exit;
+}
+$_SESSION['errors'] = $errors;
+}    
+header('location:../NavItem/contact.php');
 
-    ?>
+?>
