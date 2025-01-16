@@ -10,7 +10,7 @@ include ('../inc/navbar.php');
                         <h2 class="bold">login</h2>
                         
                        
-                        <form action="../handellers/handelchecked.php" method="POST" class="form border my-2 p-3">  
+                        <form action="../handellers/handel_login.php" method="POST" class="form border my-2 p-3">  
                         <div class="mb-3">
                                 <div class="mb-3">
                                     <label for="email">EMAIL</label>
