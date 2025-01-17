@@ -23,12 +23,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'product_quantity' => $product_quantity
         ];
 
-        $_SESSION['cartdata'][] = $cart_item;
-        header('location:../NavItem/cart.php');
-        exit();
-    }
-}
-?>
+
+
+        
+            $errors = [];
+        
+            // التحقق من البيانات
+            if (empty($product_name)) {
+                $errors[] = "Product name is required";
+            }
+            if ($product_price <= 0) {
+                $errors[] = "Product price must be greater than 0";
+            }
+            if ($product_quantity < 0) {
+                $errors[] = "Product quantity cannot be negative";
+            }
+        
+            if (empty($errors)) {
+                // تخزين المنتج في ملف CSV
+                $file_path = '../Data/products.csv';
+                $file = fopen($file_path, 'a');
+                fputcsv($file, [$product_name, $product_price, $product_quantity]);
+                fclose($file);
+        
+                $_SESSION['success'] = ['product_name' => $product_name, 'product_price' => $product_price, 'product_quantity' => $product_quantity];
+                header('Location: ../NavItem/add_product.php');
+                exit();
+            } else {
+                $_SESSION['errors'] = $errors;
+                header('Location: ../NavItem/add_product.php');
+                exit();
+            }
+        }}
+        
+        // $_SESSION['cartdata'][] = $cart_item;
+        // header('location:../NavItem/cart.php');
+        // exit();
+    ?>
 
 
 

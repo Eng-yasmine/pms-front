@@ -6,38 +6,63 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth']['role'] !== 'admin') {
     exit();
 }
 
+$title = 'Add Product';
+if (session_status() == PHP_SESSION_NONE) session_start();
+
+// تأكد من أن المستخدم هو أدمن
+if (!isset($_SESSION['auth']) || $_SESSION['auth']['role'] != 'admin') {
+    header('Location: ../NavItem/login.php');
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // الحصول على بيانات المنتج من الفورم
     $product_name = htmlspecialchars(trim($_POST['product_name']));
-    $product_price = number_format($_POST['product_price'] , 2);
-    $product_quantity = ($_POST['product_quantity']);
-    $errors = [];
+    $product_price = htmlspecialchars(trim($_POST['product_price']));
+    $product_quantity = htmlspecialchars(trim($_POST['product_quantity']));
 
-    // التحقق من البيانات
-    if (empty($product_name)) {
-        $errors[] = "Product name is required";
-    }
-    if ($product_price <= 0) {
-        $errors[] = "Product price must be greater than 0";
-    }
-    if ($product_quantity < 0) {
-        $errors[] = "Product quantity cannot be negative";
-    }
+    // التحقق من رفع الصورة
+    if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] == 0) {
+        $image_name = $_FILES['product_image']['name'];
+        $image_tmp_name = $_FILES['product_image']['tmp_name'];
+        $image_size = $_FILES['product_image']['size'];
+        $image_ext = pathinfo($image_name, PATHINFO_EXTENSION);
 
-    if (empty($errors)) {
-        // تخزين المنتج في ملف CSV
-        $file_path = '../Data/products.csv';
-        $file = fopen($file_path, 'a');
-        fputcsv($file, [$product_name, $product_price, $product_quantity]);
-        fclose($file);
+        // تحديد مسار رفع الصورة
+        $upload_dir = '../uploads/';
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
 
-        $_SESSION['success'] = ['product_name' => $product_name, 'product_price' => $product_price, 'product_quantity' => $product_quantity];
-        header('Location: ../NavItem/add_product.php');
-        exit();
+        if(!in_array(strtolower($image_ext), $allowed_extensions)) {
+            $errors[] = "Invalid image type. Allowed types: jpg, jpeg, png, gif.";
+            exit();
+        }
+
+        if ($image_size > 2 * 1024 * 1024) { // حجم الصورة لا يزيد عن 2 ميجابايت
+            echo "Image size is too large. Max size is 2MB.";
+            exit();
+        }
+
+        $new_image_name = uniqid('product_', true) . '.' . $image_ext;
+        $upload_path = $upload_dir . $new_image_name;
+
+        if (!file_exists($upload_dir)) {
+            mkdir($upload_dir, 0777, true); // إنشاء مجلد إذا لم يكن موجودًا
+        }
+
+        if (move_uploaded_file($image_tmp_name, $upload_path)) {
+            echo "Image uploaded successfully: $new_image_name";
+        } else {
+            echo "Failed to upload image.";
+            exit();
+        }
     } else {
-        $_SESSION['errors'] = $errors;
-        header('Location: ../NavItem/add_product.php');
-        exit();
+        echo "No image uploaded.";
     }
+
+    // إضافة البيانات إلى CSV أو أي معالجة أخرى
+    $file = fopen('../Data/products.csv', 'a');
+    fputcsv($file, [$product_name, $product_price, $product_quantity, $new_image_name ?? '']);
+    fclose($file);
+
+    echo "Product added successfully!";
 }
 ?>

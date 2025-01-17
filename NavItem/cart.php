@@ -1,5 +1,5 @@
 <?php 
-$title = "Home" ;
+$title = "Cart" ;
 if(session_status() == PHP_SESSION_NONE) session_start();
 if(!isset($_SESSION['auth'])){
     header('location:../NavItem/login.php');
