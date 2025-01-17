@@ -1,5 +1,5 @@
 <?php
-session_start();
+if(session_status() ===PHP_SESSION_NONE) session_start();
 if (!isset($_SESSION['auth']) || $_SESSION['auth']['role'] !== 'admin') {
     // إعادة التوجيه إذا لم يكن المستخدم مسجلاً كأدمن
     header('Location: ../NavItem/login.php');

@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $upload_dir = '../uploads/';
         $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
 
-        if (!in_array(strtolower($image_ext), $allowed_extensions)) {
+        if(!in_array(strtolower($image_ext), $allowed_extensions)) {
             $errors[] = "Invalid image type. Allowed types: jpg, jpeg, png, gif.";
             exit();
         }
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
     <h1>Add Product</h1>
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="../handellers/handel_add_product.php" method="POST" enctype="multipart/form-data">
         <label for="product_name">Product Name:</label>
         <input type="text" name="product_name" id="product_name" required><br><br>
 
