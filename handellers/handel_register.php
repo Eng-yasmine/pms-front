@@ -1,4 +1,4 @@
-<?php
+/*<?php
 if (session_status() == PHP_SESSION_NONE) session_start();
 include '../core/functions_and_validations.php';
 
@@ -72,15 +72,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       
         $file = fopen('../Data/userdata.csv', 'a');
         if ($file) {
-            fwrite($file, $user_data['user_name'] . ',' . $user_data['user_email'] . ',' . $user_data['user_password'] . ',' . $user_data['role'] . PHP_EOL);
-            fclose($file);
-
+            fputcsv($file, $user_data);
+           
             // تخزين بيانات المستخدم في الجلسة
             $_SESSION['auth'] = $user_data;
 
             // التوجيه إلى الصفحة الرئيسية
-            header("Location: ../NavItem/index.php");
-            exit();
+            header("Location:../NavItem/index.php");
+            fclose($file);
+
         } else {
             $errors[] = 'Failed to open the file for writing';
         }
@@ -88,14 +88,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // تخزين الأخطاء في الجلسة
     $_SESSION['errors'] = $errors;
- 
-    header("Location: ../NavItem/register.php");
+    
+    header("Location:../NavItem/register.php");
     exit();
 } else {
   
     $errors[] = 'Please enter valid data';
     $_SESSION['errors'] = $errors;
-    header("Location: ../NavItem/register.php");
+
+    header("Location:../NavItem/register.php"); 
     exit();
 }
-?>
+?> *\
