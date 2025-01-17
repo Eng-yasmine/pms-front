@@ -21,6 +21,25 @@ include ('../inc/navbar.php');?>
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row">
             <div class="col-8 mx-auto">
+            <?php
+                if(isset($_SESSION['success'])) {
+                    echo "<div class='alert alert-success'>" . $_SESSION['success'] . "</div>";
+                    unset($_SESSION['success']); // حذف الرسالة بعد عرضها
+                }
+                ?>
+                <?php
+                if (isset($_SESSION['errors'])):
+                    foreach ($_SESSION['errors'] as $error):
+                ?>
+                        <div class="alert alert-danger text-center">
+                            <?php echo $error; ?>
+                        </div>
+                <?php
+                    endforeach;
+                    unset($_SESSION['errors']);
+                endif;
+                ?>
+
                 <form action="handellers/handelcontact.php" class="form border my-2 p-3">
                     <div class="mb-3">
                         <div class="mb-3">

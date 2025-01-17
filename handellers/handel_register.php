@@ -1,4 +1,4 @@
-/*<?php
+<?php
 if (session_status() == PHP_SESSION_NONE) session_start();
 include '../core/functions_and_validations.php';
 
@@ -9,46 +9,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_password = password_hash($user_password, PASSWORD_DEFAULT);
 
     // تخصيص دور المستخدم
-    $admin_name = 'admin';
-    $user = 'user';
+    
     $_POST['role'] = ['admin' => $admin_name, 'user' => $user];
 
     $errors = [];
 
     // التحقق من اسم المستخدم
-    if (empty($user_name)) {
-      
-        $errors[] = 'Name is required';
-    }
-    if (strlen($user_name) < 6) {
-     
-        $errors[] = 'Sorry, username must be greater than 6 characters';
-    }
-    if (strlen($user_name) > 15) {
-      
-        $errors[] = 'Sorry, username must be less than 15 characters';
-    }
+    if (!requiredVal($user_name)){
 
-    // التحقق من البريد الإلكتروني
-    if (empty($user_email)) {
-       
-        $errors[] = 'Sorry, email is required';
+        $errors[] = "name is required";
+
+    }elseif(!minVal($user_name, 6)){
+
+        $errors[] = "name must be more than 8 chars";
+
+    }elseif (!maxVal($user_name, 10)){
+
+        $errors[] = "name must be less than 10 chars";
     }
-    if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
-        
-        $errors[] = 'Sorry, email is not valid';
+    
+    # validation of email 
+    
+    if (!requiredVal($user_email)){
+
+        $errors[] = "email is required";
+    }elseif (!emailVal($user_email)){
+
+        $errors[] = "please enter a valid email";   
     }
 
     // التحقق من كلمة المرور
-    if (empty($user_password)) {
+    if(empty($user_password)) {
        
         $errors[] = 'Sorry, password is required';
     }
-    if (strlen($user_password) < 8) {
+    if(!minVal($user_password , 8)) {
        
         $errors[] = 'Sorry, password must be greater than 8 characters';
     }
-    if (strlen($user_password) > 10) {
+    if(!minVal($user_password ,  10)) {
         
         $errors[] = 'Sorry, password must be less than 10 characters';
     }
@@ -94,9 +93,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
   
     $errors[] = 'Please enter valid data';
-    $_SESSION['errors'] = $errors;
+    $_SESSION['errors'] = ['key' => $errors];
 
     header("Location:../NavItem/register.php"); 
     exit();
 }
-?> *\
+?> 

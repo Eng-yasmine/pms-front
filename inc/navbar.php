@@ -9,6 +9,8 @@
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
+
+<!-- validation if user is (admin) -->
                     <?php if(isset($_SESSION['auth'])) : ?>
                     <?php if($_SESSION['auth']['role'] === 'admin') : ?>
                     <li class="nav-item"><a class="nav-link" href="add_product.php">Add product</a></li>

@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
 
         if (!in_array(strtolower($image_ext), $allowed_extensions)) {
-            $errors[] =- "Invalid image type. Allowed types: jpg, jpeg, png, gif.";
+            $errors[] = "Invalid image type. Allowed types: jpg, jpeg, png, gif.";
             exit();
         }
 

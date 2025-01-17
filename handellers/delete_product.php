@@ -24,10 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
         exit();
     } else {
         // إذا السلة فارغة أو غير موجودة
-        $errors[] = "Cart is empty!";
+        echo "Cart is empty!";
     }
 } else {
-    // إذا لم يتم إرسال الطلب بشكل صحيح
-      $errors[] = "Invalid request!";
+    
+    echo "Invalid request!";
 }
 ?>

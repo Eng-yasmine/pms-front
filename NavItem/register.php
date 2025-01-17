@@ -1,5 +1,6 @@
 <?php
 $title = "register_page";
+if(session_status() == PHP_SESSION_NONE)session_start();
 include('../inc/header.php');
 include('../inc/navbar.php');
 ?>
@@ -12,7 +13,7 @@ include('../inc/navbar.php');
 
                 <div class="mb-3">
                     <?php if (isset($_SESSION['errors'])) : ?>
-                        <?php foreach ($_SESSION['errors'] as $error) : ?>
+                        <?php foreach ($_SESSION['errors']  as $KEY => $error) : ?>
                             <div class="alert alert-danger"><?php echo $error; ?></div>
                         <?php endforeach; ?>
                         <?php unset($_SESSION['errors']); ?>
